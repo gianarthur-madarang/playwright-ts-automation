@@ -11,4 +11,5 @@ playwright/.auth/
 .DS_Store
 *.log
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
