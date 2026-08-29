@@ -8,9 +8,19 @@ Given('I am on the login page', async ({ loginPage }) => {
   await loginPage.goToLoginPage();
 });
 
+/**
+ * Used only by the admin feature Backgrounds (never by Login.feature, which tests the login
+ * form itself). Under the cached-admin storageState (see the "setup" Playwright project) the app
+ * redirects /auth/login straight to the dashboard, so probe for that first and skip resubmitting
+ * the form - falls back to a real login when there is no valid cached session.
+ */
 Given('I logged in as {string}', async ({ loginPage, data }, role: string) => {
-  await loginPage.loginAs(role);
   data.loggedInRole = role;
+  await loginPage.goToLoginPageUrl();
+  const alreadyAuthenticated = await loginPage.isDashboardDisplayed(3_000);
+  if (!alreadyAuthenticated) {
+    await loginPage.login(role);
+  }
   expect(await loginPage.isDashboardDisplayed(), `login as "${role}" did not reach the dashboard`).toBe(
     true,
   );

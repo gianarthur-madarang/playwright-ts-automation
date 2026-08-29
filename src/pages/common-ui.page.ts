@@ -14,11 +14,9 @@ import { BasePage } from './base.page';
 export class CommonUIPage extends BasePage {
   // ---- Shared selectors ----
   private readonly BREADCRUMB = '.oxd-topbar-header-breadcrumb';
-  private readonly BREADCRUMB_MODULE = '.oxd-topbar-header-breadcrumb-module';
   private readonly TABLE = '.oxd-table';
   private readonly TABLE_HEADER_CELL = '.oxd-table-header .oxd-table-th';
   private readonly ROW = '.oxd-table-card';
-  private readonly ROW_CELL = '.oxd-table-cell';
   private readonly ROW_ACTION = '.oxd-table-cell-actions button';
   private readonly ADD_BUTTON = 'button:has-text("Add")';
   private readonly LOADER = '.oxd-loading-spinner';
@@ -29,7 +27,6 @@ export class CommonUIPage extends BasePage {
   private readonly FILTER_GROUP = '.oxd-form .oxd-input-group';
   private readonly SEARCH_BUTTON = 'button[type="submit"]:has-text("Search")';
   private readonly RESET_BUTTON = 'button:has-text("Reset")';
-  private readonly PAGINATION_PAGE = '.oxd-pagination-page-item--page';
 
   /** Routes for the Admin pages under test. */
   private static readonly ROUTES: Record<string, string> = {
@@ -101,10 +98,6 @@ export class CommonUIPage extends BasePage {
     return text.toLowerCase().includes(pageName.trim().toLowerCase());
   }
 
-  async getModuleName(): Promise<string> {
-    return this.getText(this.BREADCRUMB_MODULE);
-  }
-
   // ---- Table ----
 
   async isTableDisplayed(): Promise<boolean> {
@@ -128,13 +121,6 @@ export class CommonUIPage extends BasePage {
 
   async getRowCount(): Promise<number> {
     return this.ui.count(this.ROW);
-  }
-
-  /** Cell texts of a 1-based row. */
-  async getRowValues(rowNumber: number): Promise<string[]> {
-    const cells = this.rows.nth(rowNumber - 1).locator(this.ROW_CELL);
-    const texts = await cells.allInnerTexts();
-    return texts.map((text) => text.trim());
   }
 
   /** Whether any row contains the given text. */
@@ -174,10 +160,6 @@ export class CommonUIPage extends BasePage {
 
   async isRecordCountDisplayed(): Promise<boolean> {
     return this.waitForVisible('.oxd-text:has-text("Records Found")');
-  }
-
-  async isPaginationDisplayed(): Promise<boolean> {
-    return (await this.ui.count(this.PAGINATION_PAGE)) > 0;
   }
 
   // ---- Buttons ----
@@ -233,10 +215,6 @@ export class CommonUIPage extends BasePage {
   }
 
   // ---- Dialog ----
-
-  async isConfirmDialogDisplayed(): Promise<boolean> {
-    return this.waitForVisible(this.DIALOG);
-  }
 
   async confirmDialog(): Promise<void> {
     await this.dialog.locator(this.DIALOG_CONFIRM).click();

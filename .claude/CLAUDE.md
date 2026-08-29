@@ -89,3 +89,7 @@ it belongs in `CommonUIPage`.
 5. Never assert `record count === rows shown`. OrangeHRM pages at 50 rows, and the shared demo's
    user count crossed that line during development (34 → 52), so User Management now paginates.
    Assert the size-independent invariant instead: count > 0, rows > 0, rows ≤ count.
+6. `fullyParallel: true` + `workers: 2` run scenarios concurrently against the live shared demo.
+   That's only safe because rule 3 (unique names) holds and no scenario asserts an exact snapshot
+   count. Don't add a scenario that captures a count then asserts an exact later value, or that
+   mutates a shared/non-unique row - either would race against the other worker.

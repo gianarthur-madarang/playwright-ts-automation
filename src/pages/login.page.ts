@@ -23,6 +23,16 @@ export class LoginPage extends BasePage {
     await this.waitForVisible(this.USERNAME);
   }
 
+  /**
+   * Navigates to the login URL without waiting for the form - a cached, still-valid session
+   * makes the app redirect straight to the dashboard instead of rendering the form, so a caller
+   * that needs to distinguish "already authenticated" from "on the login page" must probe for
+   * either outcome itself rather than have this method assume one of them.
+   */
+  async goToLoginPageUrl(): Promise<void> {
+    await this.ui.goToUrl(loginUrl());
+  }
+
   /** Submits the credentials for a role. Does not assert the outcome - that is the step's job. */
   async login(role: string): Promise<void> {
     const user = getUser(role);
@@ -38,8 +48,8 @@ export class LoginPage extends BasePage {
 
   // ---- Verifications ----
 
-  async isDashboardDisplayed(): Promise<boolean> {
-    return this.waitForVisible(this.DASHBOARD_HEADER);
+  async isDashboardDisplayed(timeout?: number): Promise<boolean> {
+    return this.waitForVisible(this.DASHBOARD_HEADER, timeout);
   }
 
   async getLoggedInUserName(): Promise<string> {
