@@ -6,6 +6,7 @@
   "scripts": {
     "test": "bddgen test --tags \"not @wip and not @bug\" && playwright test",
     "test:smoke": "bddgen test --tags \"@smoke and not @wip and not @bug\" && playwright test",
+    "test:develop": "bddgen test --tags \"@prTest and not @wip and not @bug\" && playwright test",
     "test:regression": "bddgen test --tags \"not @smoke and not @wip and not @bug\" && playwright test",
     "test:login": "bddgen test --tags \"@login and not @wip and not @bug\" && playwright test",
     "test:userManagement": "bddgen test --tags \"@userManagement and not @wip and not @bug\" && playwright test",
