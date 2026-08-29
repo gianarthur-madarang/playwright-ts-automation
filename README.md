@@ -5,6 +5,18 @@ POC target: the **Admin module** of the OrangeHRM OS 5.9 public demo.
 
 ## Setup
 
+Needs Node.js 22+. If `node -v` / `npm -v` don't work in your terminal, install Node via
+[nvm](https://github.com/nvm-sh/nvm) first:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# restart your terminal, or: source ~/.zshrc
+nvm install 22
+nvm use 22
+```
+
+Then install the project:
+
 ```bash
 npm install
 npm run install:browsers
