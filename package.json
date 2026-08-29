@@ -1,0 +1,36 @@
+{
+  "name": "playwright-ts-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BDD UI automation framework - playwright-bdd + @playwright/test + TypeScript. POC target: OrangeHRM Admin module.",
+  "scripts": {
+    "test": "bddgen test --tags \"not @wip and not @bug\" && playwright test",
+    "test:smoke": "bddgen test --tags \"@smoke and not @wip and not @bug\" && playwright test",
+    "test:regression": "bddgen test --tags \"not @smoke and not @wip and not @bug\" && playwright test",
+    "test:login": "bddgen test --tags \"@login and not @wip and not @bug\" && playwright test",
+    "test:userManagement": "bddgen test --tags \"@userManagement and not @wip and not @bug\" && playwright test",
+    "test:jobTitles": "bddgen test --tags \"@jobTitles and not @wip and not @bug\" && playwright test",
+    "test:headed": "bddgen test --tags \"not @wip and not @bug\" && playwright test --headed",
+    "test:ui": "bddgen test && playwright test --ui",
+    "test:debug": "bddgen test && playwright test --debug",
+    "test:failed": "playwright test --last-failed",
+    "report": "playwright show-report reports/html",
+    "trace": "playwright show-trace",
+    "install:browsers": "playwright install chromium",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{ts,json,md}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.18.0",
+    "playwright": "^1.50.0",
+    "playwright-bdd": "^9.2.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  }
+}
